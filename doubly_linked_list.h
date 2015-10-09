@@ -21,7 +21,7 @@ public:
 	Node* GetPrev() {return prev;};
 	void SetNext(Node* node) {next = node;};
 	Node* GetNext() {return next;};
-	void SetVal(NodeType* val) {val = val;};
+	void SetVal(NodeType* value) {val = value;};
 	NodeType* GetVal() {return val;};
 };
 

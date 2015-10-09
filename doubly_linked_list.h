@@ -8,8 +8,8 @@ private:
 	Node* next;
 	NodeType* val;
 public:
-	Node(NodeType* val) {
-		val = val;
+	Node(NodeType* value) {
+		val = value;
 		prev = NULL;
 		next = NULL;
 	}
@@ -37,4 +37,5 @@ public:
 	void Remove(NodeType* node);
 	NodeType* Traverse(void); // Don't understand the question.	
 };
+#include "doubly_linked_list.cpp"
 #endif

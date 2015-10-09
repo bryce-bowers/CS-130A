@@ -6,7 +6,7 @@ DoublyLinkedList<NodeType>::DoublyLinkedList() {
 
 template <class NodeType>
 DoublyLinkedList<NodeType>::~DoublyLinkedList() {
-	Node* tmp;
+	Node<NodeType>* tmp;
 	while (head) {
 		tmp = head;
 		head = head->GetNext();
@@ -16,13 +16,13 @@ DoublyLinkedList<NodeType>::~DoublyLinkedList() {
 
 template <class NodeType>
 void DoublyLinkedList<NodeType>::Add(NodeType* node) {
-	Node* tmp = head;
-	if (!head) head = new Node(node);
+	Node<NodeType>* tmp = head;
+	if (!head) head = new Node<NodeType>(node);
 	while (tmp->GetNext()) {
 		 tmp = tmp->GetNext();
 	}
 	if (!node) {
-		Node* n = new Node(node);
+		Node<NodeType>* n = new Node<NodeType>(node);
 		tmp->SetNext(n);
 		n->SetPrev(tmp);  
 	}
@@ -30,11 +30,11 @@ void DoublyLinkedList<NodeType>::Add(NodeType* node) {
 
 template <class NodeType>
 void DoublyLinkedList<NodeType>::Remove(NodeType* node) {
-	Node* tmp = head;
+	Node<NodeType>* tmp = head;
 	while (tmp) {
 		if (tmp->GetVal() == node) {
-			Node* prev = tmp->GetPrev();
-			Node* next = tmp->GetNext();
+			Node<NodeType>* prev = tmp->GetPrev();
+			Node<NodeType>* next = tmp->GetNext();
 			if (prev) prev->SetNext(next);
 			if (next) next->SetPrev(prev);
 			if (tmp == head) head = head->GetNext();
@@ -45,18 +45,6 @@ void DoublyLinkedList<NodeType>::Remove(NodeType* node) {
 }
 
 
-
-class DoublyLinkedList { 
-private:
-	NodeType* head; // May need tail, depending on what 2.d asks for.
-public:
-	DoublyLinkedList();
-	~DoublyLinkedList();
-	
-	void Add(NodeType* node);
-	void Remove(NodeType* node);
-	NodeType* Traverse(void); // Don't understand the question.	
-};
 
 template <class NodeType>
 NodeType* DoublyLinkedList<NodeType>::Traverse(void) {

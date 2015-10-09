@@ -1,6 +1,6 @@
 #ifndef DOUBLY_LINKED_LIST_H
 #define DOUBLY_LINKED_LIST_H
-
+#include <stddef.h>
 template <class NodeType>
 class Node {
 private:
@@ -20,15 +20,15 @@ public:
 	void SetPrev(Node* node) {prev = node;};
 	Node* GetPrev() {return prev;};
 	void SetNext(Node* node) {next = node;};
-	Node* GetPrev() {return next;};
+	Node* GetNext() {return next;};
 	void SetVal(NodeType* val) {val = val;};
 	NodeType* GetVal() {return val;};
-}
+};
 
 template <class NodeType>
 class DoublyLinkedList { 
 private:
-	Node* head; // May need tail, depending on what 2.d asks for.
+	Node<NodeType>* head; // May need tail, depending on what 2.d asks for.
 public:
 	DoublyLinkedList();
 	~DoublyLinkedList();

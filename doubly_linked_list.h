@@ -35,7 +35,7 @@ public:
 	
 	void Add(NodeType* node);
 	void Remove(NodeType* node);
-	NodeType* Traverse(void); // Don't understand the question.	
+	Node<NodeType>* GetHead(void); // Get head	
 };
 #include "doubly_linked_list.cpp"
 #endif

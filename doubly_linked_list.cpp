@@ -51,8 +51,8 @@ void DoublyLinkedList<NodeType>::Remove(NodeType* node) {
 
 
 template <class NodeType>
-NodeType* DoublyLinkedList<NodeType>::Traverse(void) {
+Node<NodeType>* DoublyLinkedList<NodeType>::GetHead(void) {
 	if (head) return head->GetVal();
-	return NULL; // TODO 
+	return NULL;  
 }
-	
+

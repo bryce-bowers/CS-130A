@@ -8,18 +8,21 @@ class WallPost
  private:
   string author_username;
   string text;	
-  time_t time_object;
   string time_created;
 
-  void getTimeCreated(time_t);
-
  public:
-  WallPost(author_username, text);
+  WallPost(string author_username, string text);
+  WallPost(string author_username, string text, string time_created);
   ~WallPost();
 
-  string getText();
-  string getTime();
-  string getUsername();
-  string getWallPost();
+  string GetText();
+  string GetTimeCreated();
+  string GetAuthorUsername();
+
+  void SetText(string text);
+  void SetTimeCreated(string time_created);
+  void SetAuthorUsername(string author_username);
+
+  string WallPostToString();
 }
 #endif

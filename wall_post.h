@@ -3,11 +3,13 @@
 #include <string>
 #include <ctime>
 
+using namespace std;
+
 class WallPost
 {
  private:
   string author_username;
-  string text;	
+  string text;
   string time_created;
 
  public:
@@ -20,9 +22,9 @@ class WallPost
   string GetAuthorUsername();
 
   void SetText(string text);
-  void SetTimeCreated(string time_created);
-  void SetAuthorUsername(string author_username);
+  bool SetTimeCreated(string time_created);
+  bool SetAuthorUsername(string author_username);
 
   string WallPostToString();
-}
+};
 #endif

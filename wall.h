@@ -1,21 +1,26 @@
 #ifndef WALL_H
-#include WALL_H
+#define WALL_H
 #include <string>
+#include "doubly_linked_list.h"
+#include "wall_post.h"
 
-class Wall {
+using namespace std;
+
+class Wall
+{
  private:
   string username;
-  DoublyLinkedList<WallPost> wall_post;
+  DoublyLinkedList<Node<WallPost> > wall_posts();
 
  public:
-  Wall(string post_text);
-  Wall(string post_text, string username);
+  Wall(string username);
   ~Wall();
-  bool AddPost(WallPost);
-  bool CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
+  //void AddPost(WallPost*);
+  /*bool CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
+  */
   string GetUsername();
-  bool RemovePost(WallPost wall_post);
+  //void RemovePost(WallPost wall_post);
   void SetUsername(string username);
-  string WriteWallToString();
-}
+  /*string WriteWallToString();*/
+};
 #endif

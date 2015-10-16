@@ -8,7 +8,6 @@ using namespace std;
 Wall::Wall(string username)
 {
   this->username = username;
-  
 }
 
 void Wall::AddPost(WallPost* wall_post)
@@ -27,10 +26,9 @@ bool Wall::CreateWallFromString(string wall_posts_as_string)
 
   delimiter_position = wall_posts_as_string.find(wall_username_delimiter);
   wall_post_strings[0] = wall_posts_as_string.substr(0, delimiter_position);      
-  Wall* newPost = new Wall(wall_post_strings[0]);
   wall_posts_as_string.erase(0, delimiter_position + 4);
   Wall newWall(wall_post_strings[0]);
-
+  //cout << wall_post_strings[0];
   while (wall_posts_as_string.find(new_attribute_delimiter) < wall_posts_as_string.find(new_wall_post_delimiter))
     {
       for(int i = 0; i < wall_post_strings_size; i++) //is there a way to find size of the array? this hurts me
@@ -42,11 +40,13 @@ bool Wall::CreateWallFromString(string wall_posts_as_string)
 	  delimiter_position = wall_posts_as_string.find(new_attribute_delimiter);
           wall_post_strings[i] = wall_posts_as_string.substr(0, delimiter_position);
           wall_posts_as_string.erase(0, delimiter_position+4);
+	  //cout << wall_post_strings[i] << endl;
         }
       delimiter_position = wall_posts_as_string.find(new_wall_post_delimiter);
       wall_posts_as_string.erase(0, 5); //deletes new wall post delimiter
 
       WallPost* newWallPost = new WallPost(wall_post_strings[0], wall_post_strings[1]);
+      //cout << newWallPost->WallPostToString() << "dsafdasf" << endl;
       for(int i = 0; i < wall_post_strings_size; i++)
         {
           switch(i)
@@ -61,6 +61,7 @@ bool Wall::CreateWallFromString(string wall_posts_as_string)
         }
       newWall.AddPost(newWallPost);
     }
+  cout << newWall.WriteWallToString() << endl;
   return true;
 }
 

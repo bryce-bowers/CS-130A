@@ -10,17 +10,16 @@ class Wall
 {
  private:
   string username;
-  DoublyLinkedList<Node<WallPost> > wall_posts;
+  DoublyLinkedList<WallPost> wall_posts;
 
  public:
   Wall(string username);
-  ~Wall();
-  void AddPost(WallPost*);
+  void AddPost(WallPost* wall_post);
   //bool CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
   
   string GetUsername();
-  void RemovePost(WallPost wall_post);
+  void RemovePost(WallPost* wall_post);
   void SetUsername(string username);
-  /*string WriteWallToString();*/
+  string WriteWallToString();
 };
 #endif

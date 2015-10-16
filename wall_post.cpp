@@ -19,6 +19,10 @@ WallPost::WallPost(string author_username, string text, string time_created)
   this->text = text;
   this->time_created = time_created;
 }
+WallPost::~WallPost()
+{
+  //intentinally left blank
+}
 string WallPost::GetText()
 {
   return this->text;

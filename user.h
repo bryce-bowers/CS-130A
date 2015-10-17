@@ -13,6 +13,7 @@ private:
 	string realname;
 	string birthday;
 public:
+	User() {}
 	User(string uname, string pass, string rname, string bday, Wall* w);
 	~User();
 	string GetUserName() {
@@ -40,9 +41,10 @@ public:
 		birthday = bday;
 	}
 	void AddWallPost(string text);
-	void DeleteWallPost(); //TODO
-	string RetriveInfo();
+	void DeleteWallPost();
+	string RetrieveInfo();
 	void ConstructUserFromString(string user_info);
+	void DisplayWallPosts();
 	
 };
 #endif

@@ -13,6 +13,7 @@ class WallPost
   string time_created;
 
  public:
+  WallPost() {}
   WallPost(string author_username, string text);
   WallPost(string author_username, string text, string time_created);
   ~WallPost();
@@ -23,8 +24,9 @@ class WallPost
 
   void SetText(string text);
   bool SetTimeCreated(string time_created);
-  bool SetAuthorUsername(string author_username);
+  void SetAuthorUsername(string author_username);
 
   string WallPostToString();
+  void ConstructFromString(string data);
 };
 #endif

@@ -1,8 +1,10 @@
 #include "doubly_linked_list.h"
+#include "basic.h"
 #include "wall.h"
 #include "wall_post.h"
 #include <string>
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 Wall::Wall(string username)
@@ -12,70 +14,63 @@ Wall::Wall(string username)
 
 void Wall::AddPost(WallPost* wall_post)
 {
-  this->wall_posts.Add(wall_post);
+  wall_posts.Add(wall_post);
 }
 
-Wall Wall::CreateWallFromString(string wall_posts_as_string) 
+void Wall::CreateWallFromString(string data) 
 {
-  string wall_post_strings[3]; //stores the attributes until the WallPost is created
-  const int wall_post_strings_size = 3; //is there a way to find size of the array? this hurts me
-  size_t delimiter_position; //finds index of first char in delimiter
-  const string wall_username_delimiter=";wu&"; //indicates username for Wall
-  const string new_wall_post_delimiter=";nwp&"; //indicates start of new WallPost
-  const string new_attribute_delimiter=";na&"; //indicates next attribute for WallPost
-
-  /** parse Wall.username **/
-  delimiter_position = wall_posts_as_string.find(wall_username_delimiter);
-  wall_post_strings[0] = wall_posts_as_string.substr(0, delimiter_position);      
-  wall_posts_as_string.erase(0, delimiter_position + wall_username_delimiter.size());
-  
-  Wall newWall(wall_post_strings[0]); //creates Wall
-
-  while (wall_posts_as_string.find(new_attribute_delimiter) < wall_posts_as_string.find(new_wall_post_delimiter)) //while there are more wall posts to parse
-    {
-      /** resets array for WallPost  attributes **/
-      for(int i = 0; i < wall_post_strings_size; i++) 
-        {
-          wall_post_strings[i] = "";
-        }
-      /** stores attribute to array and deletes attribute from string **/
-      for (int i = 0; wall_posts_as_string.find(new_attribute_delimiter) < wall_posts_as_string.find(new_wall_post_delimiter); i++)
-        {
-	  delimiter_position = wall_posts_as_string.find(new_attribute_delimiter);
-          wall_post_strings[i] = wall_posts_as_string.substr(0, delimiter_position);
-          wall_posts_as_string.erase(0, delimiter_position+new_attribute_delimiter.size());
-        }
-      
-      delimiter_position = wall_posts_as_string.find(new_wall_post_delimiter);
-      wall_posts_as_string.erase(0, new_wall_post_delimiter.size()); //deletes new wall post delimiter from string
-      
-      /** adds parsed attributes to the WallPost **/
-      WallPost* newWallPost = new WallPost(wall_post_strings[0], wall_post_strings[1]);
-      for(int i = 0; i < wall_post_strings_size; i++)
-        {
-          switch(i)
-            {
-	    case 2:
-              if (wall_post_strings[i] != "")
-                {
-                  newWallPost->SetTimeCreated(wall_post_strings[i]);
-                }
-	      break;
-            }
-        }
-      newWall.AddPost(newWallPost); //adds WallPost to the Wall. Boom!
-    }
-  return newWall;
+ 	size_t cur_pos = data.find("POST_CONTENT", 0);
+	if (cur_pos == string::npos) {
+		cout << "No post data found." << endl;
+		return;
+	}
+	size_t next_pos = data.find("POST_CONTENT", cur_pos+1);
+	string post_data;
+	while (next_pos != string::npos) {
+		post_data = data.substr(cur_pos, next_pos - cur_pos);
+		WallPost *post = new WallPost();
+		post->SetAuthorUsername(username);
+		post->ConstructFromString(post_data);
+		AddPost(post);
+		cur_pos = next_pos;
+		next_pos = data.find("POST_CONTENT", cur_pos + 1);
+	}
+	post_data = data.substr(cur_pos, data.length());
+	WallPost *post  = new WallPost();
+	post->SetAuthorUsername(username);
+	post->ConstructFromString(post_data);
+	AddPost(post);
 }
 
 
 string Wall::GetUsername()
 {
-  return this->username;
+  return username;
 }
-void Wall::RemovePost(WallPost* wall_post)
+void Wall::RemovePost()
 {
-  this->wall_posts.Remove(wall_post);
+  unordered_map<int,WallPost*> posts;
+  int post_index = 1;
+  Node<WallPost> *head = wall_posts.GetHead();
+  cout << "Here are all your posts: " << endl;
+  while (head) {
+    WallPost *post = head->GetVal();
+    cout << "Post Index: " << post_index << endl;
+    cout << post->WallPostToString() << endl;
+    head = head->GetNext();
+    posts[post_index] = post;
+    post_index ++;
+  }
+  if (post_index == 1) {
+	  cout << "No wall post to delete." << endl;
+	  return;
+  }
+  cout << "Input post index to delete: " << endl;
+  int idx_del;
+  while (!ReadInt(idx_del) || idx_del > post_index) {
+  	cout << "Invalide post index. Enter again: " << endl;
+  }
+  wall_posts.Remove(posts[idx_del]);
 }
 void Wall::SetUsername(string username)
 {
@@ -92,5 +87,4 @@ string Wall::WriteWallToString()
         pointer = pointer->GetNext();
       } 
   return wall_as_string;
-
 }

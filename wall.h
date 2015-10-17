@@ -15,10 +15,10 @@ class Wall
  public:
   Wall(string username);
   void AddPost(WallPost* wall_post);
-  Wall CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
+  void CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
   
   string GetUsername();
-  void RemovePost(WallPost* wall_post);
+  void RemovePost();
   void SetUsername(string username);
   string WriteWallToString();
 };

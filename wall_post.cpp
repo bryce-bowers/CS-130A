@@ -1,6 +1,7 @@
+#include "wall_post.h"
 #include <ctime>
 #include <string>
-#include "wall_post.h"
+#include <sstream>
 
 using namespace std;
 
@@ -25,15 +26,15 @@ WallPost::~WallPost()
 }
 string WallPost::GetText()
 {
-  return this->text;
+  return text;
 }
 string WallPost::GetTimeCreated()
 {
-  return this->time_created;
+  return time_created;
 }
 string WallPost::GetAuthorUsername()
 {
-  return this->author_username;
+  return author_username;
 }
 void WallPost::SetText(string text)
 {
@@ -46,20 +47,33 @@ bool WallPost::SetTimeCreated(string time_created)
   this->time_created = time_created;
   return true;
 }
-bool WallPost::SetAuthorUsername(string author_username)
+void WallPost::SetAuthorUsername(string author_username)
 {
   this->author_username = author_username;
 }
 string WallPost::WallPostToString()
 {
   string wall_post_as_string = "";
-  wall_post_as_string += "author username: ";
-  wall_post_as_string += this->GetAuthorUsername();
-  wall_post_as_string += '\n';
-  wall_post_as_string += "text: ";
+  wall_post_as_string += "POST_CONTENT:";
   wall_post_as_string += this->GetText();
   wall_post_as_string += '\n';
-  wall_post_as_string += "time created: ";
+  wall_post_as_string += "CREATION_TIME:";
   wall_post_as_string += this->GetTimeCreated();
   return wall_post_as_string;
 }
+void WallPost::ConstructFromString(string data) {
+	istringstream ss(data);
+	while (ss) {
+		string s;
+		if (!getline(ss, s)) break;
+		size_t found = s.find(':');
+		if (found == string::npos) continue;
+		const string keyword = s.substr(0, found);
+		string value = s.substr(found+1);
+		if (keyword == "POST_CONTENT")
+			text = value;
+		else if (keyword == "CREATION_TIME")
+			time_created = value;
+	} 
+}
+

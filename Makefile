@@ -16,4 +16,7 @@ run: ${OBJS}
 .PHONY: all
 all: run
 
+.PHONY: clean
+clean:
+	rm -rf $(OBJS) run
 

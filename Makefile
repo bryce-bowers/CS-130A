@@ -6,12 +6,12 @@ OBJS += user_network.o
 OBJS += main.o
 
 CC = g++
-
+CCFLAGS = -std=c++11
 %.o: %.cpp
-	$(CC) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 run: ${OBJS}
-	$(CC) $^ -o $@
+	$(CC) $(CCFLAGS) $^ -o $@
 
 .PHONY: all
 all: run

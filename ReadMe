@@ -1,3 +1,8 @@
+Autours: 
+Anna Luo, Bryce Bowers
+
+
+-------------------------
 1. How to compile:
 
 In this folder, type "make" to compile.
@@ -26,4 +31,11 @@ When a user is authorized, he/she can choose the follwing operations:
 
 ---------------------------
 3. For data format, check "userdata".
-When the contents of a user are updated, his/her current file can be dumped to a file. The entire "userdata" is allowed to be updated in next version. 
+When the contents of a user are updated, his/her current file can be dumped to a file. The entire "userdata" is allowed to be updated in next version.
+
+
+---------------------------
+4. Limitation:
+Some keywords are currently used to format the data. Those keywords should not be include in wall posts.
+Keywords:
+USERNAME,PASSWORD,BIRTHDAY,REALNAME,POST_CONTENT,CREATION_TIME. 

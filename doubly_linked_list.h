@@ -13,6 +13,7 @@ public:
 		prev = NULL;
 		next = NULL;
 	}
+	Node() {}
 	~Node() {
 		delete val;
 	}
@@ -35,7 +36,10 @@ public:
 	
 	void Add(NodeType* node);
 	void Remove(NodeType* node);
-	Node<NodeType>* GetHead(void); // Get head	
+	Node<NodeType>* GetHead(void); // Get head
+	void SetHead(Node<NodeType>* node) {
+		head = node;
+	}	
 };
 #include "doubly_linked_list.cpp"
 #endif

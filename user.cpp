@@ -5,6 +5,15 @@
 #include <sstream>
 using namespace std;
 
+bool User::operator == (const User &u) const {
+   if (u.username != username
+	|| u.realname != realname 
+	|| u.password != password 
+	|| u.birthday != birthday)
+	return false;
+  return true;
+}
+
 User::User(string uname, string pass, string rname, string bday, Wall* w) {
 	wall = w;
 	username = uname;
@@ -20,7 +29,7 @@ User::~User() {
 void User::AddWallPost(string text) {
 	if (wall) {
 		WallPost *post = new WallPost(username,text);
-		wall->AddPost(post);
+		wall->AddPost(*post);
 	} 
 }	
 

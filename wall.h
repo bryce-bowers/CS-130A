@@ -14,7 +14,7 @@ class Wall
 
  public:
   Wall(string username);
-  void AddPost(WallPost* wall_post);
+  void AddPost(WallPost wall_post);
   void CreateWallFromString(string); //Wall will only have WallPosts given by the string parameter
   
   string GetUsername();

@@ -16,14 +16,16 @@ List<T>::~List() {
 
 
 template <class T>
-bool List<T>::insert(int pos, T & item) {
+bool List<T>::insert(int pos, const T & item) {
 	if (pos < 0 || pos > length) return false;
 	int count = 0;
 	Node<T>* cur = linked_list->GetHead();
 	Node<T>* node = new Node<T>;
-	node->SetVal(&item);
+	node->SetVal(item);
 	if (pos == 0) {
-		cur->SetPrev(node);
+		if (cur) {
+			cur->SetPrev(node);
+		}
 		node->SetNext(cur);
 		linked_list->SetHead(node);
 		length ++;
@@ -37,7 +39,8 @@ bool List<T>::insert(int pos, T & item) {
 	cur->SetNext(node);
 	node->SetPrev(cur);
 	node->SetNext(tmp);
-	tmp->SetPrev(node);
+	if (tmp)
+		tmp->SetPrev(node);
 	length ++;
 	return true;
 }
@@ -73,7 +76,7 @@ bool List<T>::remove(int pos) {
 }
 
 template <class T>
-bool List<T>::set(int pos, T & item) {
+bool List<T>::set(int pos, const T & item) {
 	if (pos < 0 || pos >= length) return false;
 	int count = 0;
 	Node<T>* cur = linked_list->GetHead();
@@ -81,12 +84,12 @@ bool List<T>::set(int pos, T & item) {
 		cur = cur->GetNext();
 		count ++;
 	}
-	cur->SetVal(&item);
+	cur->SetVal(item);
 	return true;
 }
 
 template <class T>
-T & List<T>::get(int pos) {
+T & List<T>::get(int pos) const {
 	if (pos < 0 || pos >= length) {
 		cout << "Invalid range!";
 		exit(1);
@@ -97,7 +100,7 @@ T & List<T>::get(int pos) {
 		cur = cur->GetNext();
 		count ++;
 	}
-	return *(cur->GetVal());
+	return cur->GetVal();
 }
 
 

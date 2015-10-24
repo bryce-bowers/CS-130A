@@ -12,7 +12,7 @@ Wall::Wall(string username)
   this->username = username;
 }
 
-void Wall::AddPost(WallPost* wall_post)
+void Wall::AddPost(WallPost wall_post)
 {
   wall_posts.Add(wall_post);
 }
@@ -31,7 +31,7 @@ void Wall::CreateWallFromString(string data)
 		WallPost *post = new WallPost();
 		post->SetAuthorUsername(username);
 		post->ConstructFromString(post_data);
-		AddPost(post);
+		AddPost(*post);
 		cur_pos = next_pos;
 		next_pos = data.find("POST_CONTENT", cur_pos + 1);
 	}
@@ -39,7 +39,7 @@ void Wall::CreateWallFromString(string data)
 	WallPost *post  = new WallPost();
 	post->SetAuthorUsername(username);
 	post->ConstructFromString(post_data);
-	AddPost(post);
+	AddPost(*post);
 }
 
 
@@ -49,14 +49,14 @@ string Wall::GetUsername()
 }
 void Wall::RemovePost()
 {
-  unordered_map<int,WallPost*> posts;
+  unordered_map<int,WallPost> posts;
   int post_index = 1;
   Node<WallPost> *head = wall_posts.GetHead();
   cout << "Here are all your posts: " << endl;
   while (head) {
-    WallPost *post = head->GetVal();
+    WallPost post = head->GetVal();
     cout << "Post Index: " << post_index << endl;
-    cout << post->WallPostToString() << endl;
+    cout << post.WallPostToString() << endl;
     head = head->GetNext();
     posts[post_index] = post;
     post_index ++;
@@ -82,7 +82,7 @@ string Wall::WriteWallToString()
     string wall_as_string = "";
     while(pointer)
       {
-        wall_as_string += pointer->GetVal()->WallPostToString();
+        wall_as_string += pointer->GetVal().WallPostToString();
         wall_as_string += '\n';
         pointer = pointer->GetNext();
       } 

@@ -16,6 +16,7 @@ public:
 	User() {}
 	User(string uname, string pass, string rname, string bday, Wall* w);
 	~User();
+	bool operator == (const User &u) const;
 	string GetUserName() {
 		return username;
 	}

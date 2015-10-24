@@ -12,12 +12,13 @@ class WallPost
   string text;
   string time_created;
 
- public:
+ public:	
   WallPost() {}
   WallPost(string author_username, string text);
   WallPost(string author_username, string text, string time_created);
   ~WallPost();
 
+  bool operator == (const WallPost& w) const;
   string GetText();
   string GetTimeCreated();
   string GetAuthorUsername();

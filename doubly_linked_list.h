@@ -6,24 +6,22 @@ class Node {
 private:
 	Node* prev;
 	Node* next;
-	NodeType* val;
+	NodeType val;
 public:
-	Node(NodeType* value) {
+	Node(NodeType &value) {
 		val = value;
 		prev = NULL;
 		next = NULL;
 	}
 	Node() {}
-	~Node() {
-		delete val;
-	}
+	~Node() {}
 
 	void SetPrev(Node* node) {prev = node;};
 	Node* GetPrev() {return prev;};
 	void SetNext(Node* node) {next = node;};
 	Node* GetNext() {return next;};
-	void SetVal(NodeType* value) {val = value;};
-	NodeType* GetVal() {return val;};
+	void SetVal(const NodeType &value) {val = value;};
+	NodeType& GetVal() {return val;};
 };
 
 template <class NodeType>
@@ -34,8 +32,8 @@ public:
 	DoublyLinkedList();
 	~DoublyLinkedList();
 	
-	void Add(NodeType* node);
-	void Remove(NodeType* node);
+	void Add(NodeType& node);
+	void Remove(NodeType& node);
 	Node<NodeType>* GetHead(void); // Get head
 	void SetHead(Node<NodeType>* node) {
 		head = node;

@@ -11,10 +11,10 @@ public:
 	List();
 	~List();
 
-	bool insert(int pos, T & item);
+	bool insert(int pos, const T & item);
 	bool remove(int pos);
-	bool set(int pos, T & item);
-	T & get(int pos);
+	bool set(int pos, const T & item);
+	T & get(int pos) const;
 };
 #include "list.cpp"
 #endif

@@ -5,6 +5,12 @@
 
 using namespace std;
 
+bool WallPost::operator == (const WallPost& w) const {
+	if (w.author_username != author_username || w.text != text || w.time_created != time_created)
+		return false;
+	return true;
+}
+
 WallPost::WallPost(string author_username, string text)
 {
   this->author_username = author_username;

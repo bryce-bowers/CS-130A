@@ -10,7 +10,7 @@ using namespace std;
 bool UserNetwork::UserExists(string uname) {
 	Node<User> *head = users.GetHead();
 	while (head) {
-		if (head->GetVal()->GetUserName() == uname) 
+		if (head->GetVal().GetUserName() == uname) 
 			return true;
 		head = head->GetNext();
 	}
@@ -23,14 +23,14 @@ void UserNetwork::AddUser(string uname, string pass, string rname, string bday) 
 	}
 	Wall* wall = new Wall(uname);
 	User* user = new User(uname, pass, rname, bday, wall);
-	users.Add(user);
+	users.Add(*user);
 }
 
 
 void UserNetwork::DeleteUser(string uname) {
 	Node<User>* head = users.GetHead();
 	while (head) {
-		if (head->GetVal()->GetUserName() == uname) 
+		if (head->GetVal().GetUserName() == uname) 
 			users.Remove(head->GetVal());
 		head = head->GetNext();
 	}
@@ -42,8 +42,8 @@ void UserNetwork::WriteUsersToFile(string fname) {
 	ofstream output_file(fname);
 	Node<User>* head = users.GetHead();
 	while (head) {
-		User* user = head->GetVal();
-		output_file << user->RetrieveInfo();		
+		User user = head->GetVal();
+		output_file << user.RetrieveInfo();		
 		head = head->GetNext();
 	}
 	output_file.close();
@@ -70,22 +70,22 @@ void UserNetwork::CreateUsersFromFile(string fname) {
 		user_data = data.substr(cur_pos, next_pos - cur_pos);
 		User *user = new User;
 		user->ConstructUserFromString(user_data);
-		users.Add(user);
+		users.Add(*user);
 		cur_pos = next_pos;
 		next_pos = data.find("USERNAME", cur_pos + 1);
 	}
 	user_data = data.substr(cur_pos, data.length());
 	User *user = new User;
 	user->ConstructUserFromString(user_data);
-	users.Add(user);
+	users.Add(*user);
 }
 
 User* UserNetwork::AuthorizeUser(string uname, string pass) {
 	Node<User> *head = users.GetHead();
 	while (head) {
-		if (head->GetVal()->GetUserName() == uname) {
-			if (head->GetVal()->GetPassword() == pass)	
-				return head->GetVal();
+		if (head->GetVal().GetUserName() == uname) {
+			if (head->GetVal().GetPassword() == pass)	
+				return &(head->GetVal());
 		} 
 		head = head->GetNext();
 	}

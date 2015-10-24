@@ -15,7 +15,7 @@ DoublyLinkedList<NodeType>::~DoublyLinkedList() {
 }
 
 template <class NodeType>
-void DoublyLinkedList<NodeType>::Add(NodeType* node) {
+void DoublyLinkedList<NodeType>::Add(NodeType& node) {
 	Node<NodeType>* tmp = head;
 	if (!head)  {
 	head = new Node<NodeType>(node);
@@ -24,15 +24,13 @@ void DoublyLinkedList<NodeType>::Add(NodeType* node) {
 	while (tmp->GetNext()) {
 		 tmp = tmp->GetNext();
 	}
-	if (node) {
-		Node<NodeType>* n = new Node<NodeType>(node);
-		tmp->SetNext(n);
-		n->SetPrev(tmp);  
-	}
+	Node<NodeType>* n = new Node<NodeType>(node);
+	tmp->SetNext(n);
+	n->SetPrev(tmp);  
 }
 
 template <class NodeType>
-void DoublyLinkedList<NodeType>::Remove(NodeType* node) {
+void DoublyLinkedList<NodeType>::Remove(NodeType& node) {
 	Node<NodeType>* tmp = head;
 	while (tmp) {
 		if (tmp->GetVal() == node) {

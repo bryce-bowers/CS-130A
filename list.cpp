@@ -42,6 +42,7 @@ bool List<T>::insert(int pos, const T & item) {
 	if (tmp)
 		tmp->SetPrev(node);
 	length ++;
+        
 	return true;
 }
 
@@ -103,4 +104,7 @@ T & List<T>::get(int pos) const {
 	return cur->GetVal();
 }
 
-
+template <class T>
+int List<T>::getLength() const {
+  return this->length;
+}

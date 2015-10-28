@@ -8,13 +8,12 @@
 using namespace std;
 
 bool UserNetwork::UserExists(string uname) {
-	Node<User> *head = users.GetHead();
-	while (head) {
-		if (head->GetVal().GetUserName() == uname) 
-			return true;
-		head = head->GetNext();
-	}
-	return false;
+        for(int i = 0; i < users.getLength(); i++)
+  	  {
+  	    if (users.get(i).GetUserName() == uname)
+  	      return true;
+  	  }
+  	return false;
 }
 
 void UserNetwork::AddUser(string uname, string pass, string rname, string bday) {
@@ -23,29 +22,26 @@ void UserNetwork::AddUser(string uname, string pass, string rname, string bday) 
 	}
 	Wall* wall = new Wall(uname);
 	User* user = new User(uname, pass, rname, bday, wall);
-	users.Add(*user);
+	users.insert(0, *user);
 }
 
 
 void UserNetwork::DeleteUser(string uname) {
-	Node<User>* head = users.GetHead();
-	while (head) {
-		if (head->GetVal().GetUserName() == uname) 
-			users.Remove(head->GetVal());
-		head = head->GetNext();
-	}
+	for (int i = 0; i < users.getLength(); i++)
+	  {
+	    if (users.get(i).GetUserName() == uname)
+	      users.remove(i);
+	  }  
 }
 	
 
 
 void UserNetwork::WriteUsersToFile(string fname) {
 	ofstream output_file(fname);
-	Node<User>* head = users.GetHead();
-	while (head) {
-		User user = head->GetVal();
-		output_file << user.RetrieveInfo();		
-		head = head->GetNext();
-	}
+	for (int i = 0; i < users.getLength(); i++)
+	  {
+	    output_file << users.get(i).RetrieveInfo();
+	  }
 	output_file.close();
 }
 
@@ -70,25 +66,23 @@ void UserNetwork::CreateUsersFromFile(string fname) {
 		user_data = data.substr(cur_pos, next_pos - cur_pos);
 		User *user = new User;
 		user->ConstructUserFromString(user_data);
-		users.Add(*user);
+		users.insert(0, *user);
 		cur_pos = next_pos;
 		next_pos = data.find("USERNAME", cur_pos + 1);
 	}
 	user_data = data.substr(cur_pos, data.length());
 	User *user = new User;
 	user->ConstructUserFromString(user_data);
-	users.Add(*user);
+	users.insert(0, *user);
 }
 
 User* UserNetwork::AuthorizeUser(string uname, string pass) {
-	Node<User> *head = users.GetHead();
-	while (head) {
-		if (head->GetVal().GetUserName() == uname) {
-			if (head->GetVal().GetPassword() == pass)	
-				return &(head->GetVal());
-		} 
-		head = head->GetNext();
-	}
-	return NULL;
+  	for (int i = 0; i < users.getLength(); i++)
+  	  {
+  	    if (users.get(i).GetUserName() == uname && users.get(i).GetPassword() == pass)
+  	      return &(users.get(i));
+  	  }
+  	return NULL;
+  
 }
 

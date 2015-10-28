@@ -5,7 +5,7 @@
 
 class UserNetwork {
 private:
-	DoublyLinkedList<User> users;
+	List<User> users;
 public:
 	UserNetwork() {}
 	~UserNetwork() {}

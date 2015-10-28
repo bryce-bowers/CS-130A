@@ -14,12 +14,17 @@ Wall::Wall(string username)
 
 void Wall::AddPost(WallPost wall_post)
 {
-  wall_posts.Add(wall_post);
+  wall_posts.insert(0, wall_post);
+}
+
+void Wall::AddPost(int pos, WallPost wall_post)
+{
+  wall_posts.insert(pos, wall_post);
 }
 
 void Wall::CreateWallFromString(string data) 
 {
- 	size_t cur_pos = data.find("POST_CONTENT", 0);
+	size_t cur_pos = data.find("POST_CONTENT", 0);
 	if (cur_pos == string::npos) {
 		cout << "No post data found." << endl;
 		return;
@@ -28,18 +33,18 @@ void Wall::CreateWallFromString(string data)
 	string post_data;
 	while (next_pos != string::npos) {
 		post_data = data.substr(cur_pos, next_pos - cur_pos);
-		WallPost *post = new WallPost();
-		post->SetAuthorUsername(username);
-		post->ConstructFromString(post_data);
-		AddPost(*post);
+		WallPost post = WallPost();
+		post.SetAuthorUsername(username);
+		post.ConstructFromString(post_data);
+		wall_posts.insert(0, post);
 		cur_pos = next_pos;
 		next_pos = data.find("POST_CONTENT", cur_pos + 1);
 	}
 	post_data = data.substr(cur_pos, data.length());
-	WallPost *post  = new WallPost();
-	post->SetAuthorUsername(username);
-	post->ConstructFromString(post_data);
-	AddPost(*post);
+	WallPost post  = WallPost();
+	post.SetAuthorUsername(username);
+	post.ConstructFromString(post_data);
+	wall_posts.insert(0,post);
 }
 
 
@@ -47,44 +52,47 @@ string Wall::GetUsername()
 {
   return username;
 }
+
 void Wall::RemovePost()
 {
-  unordered_map<int,WallPost> posts;
   int post_index = 1;
-  Node<WallPost> *head = wall_posts.GetHead();
   cout << "Here are all your posts: " << endl;
-  while (head) {
-    WallPost post = head->GetVal();
-    cout << "Post Index: " << post_index << endl;
-    cout << post.WallPostToString() << endl;
-    head = head->GetNext();
-    posts[post_index] = post;
-    post_index ++;
-  }
-  if (post_index == 1) {
-	  cout << "No wall post to delete." << endl;
-	  return;
-  }
+  for (post_index = 0; post_index < wall_posts.getLength(); post_index++)
+    {
+      cout << "Post Index: " << post_index+1 << endl;
+      cout << wall_posts.get(post_index).WallPostToString() << endl;
+    }
+  if (post_index == 0)
+    {
+      cout << "No wall post to delete." <<endl;
+      return;
+    }
   cout << "Input post index to delete: " << endl;
   int idx_del;
-  while (!ReadInt(idx_del) || idx_del > post_index) {
-  	cout << "Invalide post index. Enter again: " << endl;
-  }
-  wall_posts.Remove(posts[idx_del]);
+  while (!ReadInt(idx_del) || idx_del > post_index)
+    {
+      cout << "Invalid post index. Enter again: " << endl;
+    }
+  wall_posts.remove(idx_del-1);
+ }
+
+void Wall::RemovePost(int pos)
+{
+  wall_posts.remove(pos);
 }
+
 void Wall::SetUsername(string username)
 {
   this->username = username;
 }
+
 string Wall::WriteWallToString()
 {
-  Node<WallPost>* pointer = wall_posts.GetHead();
-    string wall_as_string = "";
-    while(pointer)
-      {
-        wall_as_string += pointer->GetVal().WallPostToString();
-        wall_as_string += '\n';
-        pointer = pointer->GetNext();
-      } 
+  string wall_as_string = "";
+  for (int i = 0; i < wall_posts.getLength(); i++)
+  {
+    wall_as_string += wall_posts.get(i).WallPostToString();
+    wall_as_string += '\n';
+  }  
   return wall_as_string;
 }

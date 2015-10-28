@@ -15,6 +15,7 @@ public:
 	bool remove(int pos);
 	bool set(int pos, const T & item);
 	T & get(int pos) const;
+	int getLength() const;
 };
 #include "list.cpp"
 #endif

@@ -57,7 +57,7 @@ void Wall::RemovePost()
 {
   int post_index = 1;
   cout << "Here are all your posts: " << endl;
-  for (post_index = 0; post_index < wall_posts.getLength(); post_index++)
+  for (post_index = 0; post_index < wall_posts.size(); post_index++)
     {
       cout << "Post Index: " << post_index+1 << endl;
       cout << wall_posts.get(post_index).WallPostToString() << endl;
@@ -89,10 +89,10 @@ void Wall::SetUsername(string username)
 string Wall::WriteWallToString()
 {
   string wall_as_string = "";
-  for (int i = 0; i < wall_posts.getLength(); i++)
-  {
-    wall_as_string += wall_posts.get(i).WallPostToString();
+  DoublyLinkedList<WallPost>::iterator it;
+  for (it = wall_posts.begin(); it != wall_posts.end(); it++) {
+    wall_as_string += (*it).WallPostToString();
     wall_as_string += '\n';
-  }  
+  }
   return wall_as_string;
 }

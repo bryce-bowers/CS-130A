@@ -1,15 +1,15 @@
 #ifndef LIST_ARRAY_H
 #define LIST_ARRAY_H
-#define MIN_LENGTH 2
 #include <stdlib.h>
+#include "list.h"
+#define MIN_LENGTH 2
 
 template <class T>
-class ListArray {
+class ListArray : List<T> {
 private:
 	T* list;
-	int length; //number of elements
 	int cur_size; //current size of array
-
+	int length;
 public:
 	ListArray() {
 		list = (T*)malloc(MIN_LENGTH  * sizeof(T));
@@ -24,7 +24,7 @@ public:
 	bool remove(int pos);
 	bool set(int pos, const T & item);
 	T & get(int pos) const;
-
+	int size() const { return length; }
 };
 #include "list_array.cpp"
 #endif

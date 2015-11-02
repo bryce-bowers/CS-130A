@@ -11,6 +11,7 @@ using namespace std;
 
 void menu(User* user) {
 	string oper;
+	user->ShowRequests();
 	while(true) {
 		cout << endl << endl << endl;
 		cout << "Enter your command (type Help for help): " << endl;
@@ -27,6 +28,13 @@ void menu(User* user) {
 			cout << "  Del: delete post" << endl;
 			cout << "  Save: dump user data to a file" << endl;
 			cout << "  Read: read user data from a file" << endl;
+			cout << "  Search: search users by name" << endl;
+			cout << "  AddFriend: add a friend by his/her username" << endl;
+			cout << "  ShowFriends: show current friends list" << endl;
+			cout << "  DeFriend: delete a friend by his/her username" << endl;
+			cout << "  ShowRequests: show all pending friend requests" << endl;
+			cout << "  Approve: approve a friend request"  << endl;
+			cout << "  Ignore: ignore a friend request (request deleted after this)"  << endl;
 			cout << "  Quit : exit." << endl;
 		} else if (oper == "Add") {
 			cout << "Enter your post: " << endl;
@@ -56,7 +64,37 @@ void menu(User* user) {
 		     			  (std::istreambuf_iterator<char>()));
 			user->ConstructUserFromString(user_data);
 			cout << "User data restored." << endl;
-		} else {
+		} else if (oper == "Search") {
+ 			cout << "Enter keyword: " << endl;
+			string keyword;
+			getline(cin, keyword);
+			user->SearchFriend(keyword);
+		} else if (oper == "AddFriend") {
+			cout << "Enter friend's username: " << endl;
+			string uname;
+			getline(cin, uname);
+			user->AddFriend(uname);
+		} else if (oper == "ShowFriends") {
+			user->ShowFriends();
+		} else if (oper == "DeFriend") {
+			cout << "Enter friend's username: " << endl;
+			string uname;
+			getline(cin, uname);
+			user->DeFriend(uname);
+		} else if (oper == "ShowRequests") {
+			user->ShowRequests();	
+		} else if (oper == "Approve") {
+ 			cout << "Enter index to approve: " << endl;
+			int num;
+			ReadInt(num);
+			user->Approve(num);
+		} else if (oper == "Ignore") {
+ 			cout << "Enter index to ignore: " << endl;
+			int num;
+			ReadInt(num);
+			user->Ignore(num);
+		}
+		else {
 			cout << "Invalid command." << endl;
 		}
 
@@ -134,6 +172,7 @@ int main(int argc, char** argv)
 			menu(user);
 			break;
 		case 3:
+			network->WriteUsersToFile(string(argv[1]));
 			return 0;
 		} 
 	}

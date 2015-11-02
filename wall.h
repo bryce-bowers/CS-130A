@@ -1,9 +1,8 @@
 #ifndef WALL_H
 #define WALL_H
 #include <string>
-#include "doubly_linked_list.h"
 #include "wall_post.h"
-#include "list.h"
+#include "doubly_linked_list.h"
 
 using namespace std;
 
@@ -12,8 +11,7 @@ class Wall
  private:
   string username;
  public:
-  List<WallPost> wall_posts;
-  //DoublyLinkedList<WallPost> wall_posts;
+  DoublyLinkedList<WallPost> wall_posts;
 
   //public:
   Wall(string username);

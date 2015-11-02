@@ -17,7 +17,7 @@ bool ListArray<T>::insert(int pos, const T & item) {
 	if (length == cur_size) {
 		T* tmp = (T*) malloc(cur_size * 2 * sizeof(T));  
 		copy(list, tmp, length);
-		delete list;
+		free(list);
 		list = tmp;
 		cur_size *= 2;
 	}
@@ -39,7 +39,7 @@ bool ListArray<T>::remove(int pos) {
 	if (length <= cur_size / 2 && length > MIN_LENGTH) {
 		T* tmp = (T*) malloc(cur_size / 2 * sizeof(T));
 		copy(list, tmp, length);
-		delete list;
+		free(list);
 		list = tmp;
 		cur_size /= 2;
 	}
@@ -61,5 +61,3 @@ T & ListArray<T>::get(int pos) const {
 	}
 	return list[pos];
 }
-
-
